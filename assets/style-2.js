@@ -3,12 +3,13 @@ const fontname = "Ubuntu";
 const fontweights = [300, 400]
 
 // Color properties
-// const basecolor = "#777";
-// const accentcolor = "#a00";
-// const highlightcolor = "#111";
 const basecolor = "#888";
 const accentcolor = "#222";
 const highlight = "#111";
+
+// const basecolor = "#777";
+// const accentcolor = "#a00";
+// const highlightcolor = "#111";
 
 // Body properties
 const bodyfontweight = 300;
@@ -35,7 +36,7 @@ const headercolor = accentcolor;
 const headerfontsize = "18pt";
 const headerdecoration = "none";
 const namecolor = highlightcolor;
-const namefontsize = "23pt";
+const namefontsize = "40pt";
 
 
 // Publication properties
