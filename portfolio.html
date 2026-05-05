@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Revathi Prasad">
+    <meta name="theme-color" content="#222222">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/style-3.css">
+
+    <style>
+      /* Match the right-column readable width to the bio page */
+      .projects-col { max-width: 720px; }
+
+      /* Match the existing .header treatment from style-3.css for visual rhythm */
+      .projects-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 28px;
+        margin-top: 8px;
+      }
+
+      .project-frame {
+        width: 100%;
+        aspect-ratio: 560 / 440;
+        border: 0;
+        background: transparent;
+        display: block;
+      }
+    </style>
+
+    <title>Revathi Prasad — Portfolio</title>
+  </head>
+  <body>
+    <div class="container pt-5 allstuffp">
+        <div class="row pt-5 allstuff">
+            <div class="col-md-4 pt-5">
+                <div class="fixed-posi">
+                <p class="name">Revathi Prasad</p>
+                <img src="images/IMG_1206.jpeg" class="profilepic pt-3 pb-2">
+                <div class="pt-5 menur"><a class="menulink" target="_blank" href="assets/Prasad, Revathi CV.pdf">curriculum vitae</a></div>
+                <div class=""><a class="menulink" href="index.html">about</a></div>
+                <div class=""><a class="menulink" href="portfolio.html"><strong>portfolio</strong></a></div>
+                <div class=""><a class="menulink" target="_blank" href="mailto:revathi.9781@gmail.com">email address</a></div>
+                <div class=""><a class="menulink" target="_blank" href="https://github.com/revathi-prasad">github profile</a></div>
+                <div class=""><a class="menulink" target="_blank" href="https://www.linkedin.com/in/revathi-prasad/">linkedin</a></div>
+                </div>
+        </div>
+            <div class="col-md-8 pt-5 about projects-col">
+
+              <p class="header">Projects &amp; Open-Source</p>
+              <div class="py-2">
+                <p class="paper my-2 pl-2">
+                  Research-flavoured products and datasets I've been building. Click any card to open the repo on GitHub.
+                </p>
+              </div>
+
+              <div class="projects-grid pt-3">
+                <iframe class="project-frame" src="cards/KairosCard.html" title="Kairos" loading="lazy"></iframe>
+                <iframe class="project-frame" src="cards/SentamizhCard.html" title="Sentamizh Corpus" loading="lazy"></iframe>
+                <iframe class="project-frame" src="cards/PodcastCard.html" title="AI Builders Podcast" loading="lazy"></iframe>
+                <iframe class="project-frame" src="cards/PuplCard.html" title="Pupl" loading="lazy"></iframe>
+              </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="assets/style-3.js"></script>
+</body>
+</html>

@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Kairos — portfolio card</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1f1611;
+    --paper: #faf6ec;
+    --paper-deep: #f4ecdc;
+    --muted: #78716c;
+    --border: #e7dfd0;
+    --border-strong: #d6cab2;
+
+    /* Kairos accents (lifted from packages/web/src/app/globals.css) */
+    --kairos-gold: #E5A54B;
+    --kairos-gold-hover: #F0B560;
+    --kairos-indigo: #6366F1;
+    --kairos-indigo-soft: #818CF8;
+    --kairos-bg: #0A0A0F;
+    --kairos-surface: #16161D;
+    --kairos-elevated: #1C1C25;
+    --kairos-border: #2A2A38;
+    --kairos-border-subtle: #222230;
+    --kairos-text: #F0F0F5;
+    --kairos-text-2: #8888A0;
+    --kairos-text-3: #555568;
+
+    --shadow-card: 0 1px 2px rgba(60,30,10,0.05), 0 8px 24px rgba(60,30,10,0.08);
+    --shadow-card-hover: 0 2px 4px rgba(60,30,10,0.06), 0 18px 40px rgba(60,30,10,0.14);
+    --shadow-window: 0 1px 2px rgba(0,0,0,0.4), 0 18px 38px rgba(10,10,15,0.35);
+  }
+
+  html, body {
+    margin: 0;
+    background: #ffffff;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    font-family: "Inter", -apple-system, system-ui, sans-serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .pcard {
+    --w: 560px;
+    --h: 440px;
+    width: var(--w);
+    height: var(--h);
+    display: grid;
+    grid-template-columns: 1fr 252px;
+    background: var(--paper);
+    border: 1px solid var(--border-strong);
+    border-radius: 14px;
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    isolation: isolate;
+    transition: transform .35s cubic-bezier(.2,.7,.2,1),
+                box-shadow .35s cubic-bezier(.2,.7,.2,1),
+                border-color .35s ease;
+  }
+  .pcard:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-card-hover);
+    border-color: #b8a47e;
+  }
+
+  .pcard::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(99,102,241,0.04) 1px, transparent 0);
+    background-size: 18px 18px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .pcard-left {
+    position: relative;
+    z-index: 1;
+    padding: 28px 26px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 14px;
+    min-width: 0;
+  }
+
+  .meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: "Inter", sans-serif;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #8a5a1f;
+    white-space: nowrap;
+  }
+  .meta .dot {
+    width: 4px; height: 4px; border-radius: 50%;
+    background: #c08a3a;
+    opacity: 0.6;
+  }
+
+  .title {
+    font-family: "EB Garamond", "Iowan Old Style", Georgia, serif;
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 1.18;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin: 0;
+    text-wrap: pretty;
+  }
+  .title em {
+    font-style: italic;
+    color: #8a5a1f;
+  }
+
+  .sub {
+    font-family: "Inter", sans-serif;
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: #4a3f33;
+    margin: 0;
+    text-wrap: pretty;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 4px;
+  }
+  .tchip {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: #5a4634;
+    background: #fbf3e2;
+    border: 1px solid #ead9b5;
+    padding: 4px 8px;
+    border-radius: 4px;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  .pcard-foot {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 14px;
+  }
+  .repo {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px;
+    color: var(--muted);
+    letter-spacing: 0.01em;
+  }
+  .repo strong { color: var(--ink); font-weight: 500; }
+  .arrow {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 1px solid var(--border-strong);
+    display: grid; place-items: center;
+    color: #8a5a1f;
+    transition: transform .35s cubic-bezier(.2,.7,.2,1),
+                background .35s ease, color .35s ease, border-color .35s ease;
+  }
+  .pcard:hover .arrow {
+    background: var(--kairos-gold);
+    border-color: var(--kairos-gold);
+    color: #fff;
+    transform: translateX(2px);
+  }
+  .arrow svg { width: 12px; height: 12px; }
+
+  .pcard-right {
+    position: relative;
+    z-index: 1;
+    background:
+      radial-gradient(120% 80% at 100% 0%, #f0e6cc 0%, #ecdfc1 60%, #e6d6b0 100%);
+    border-left: 1px solid var(--border);
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .pcard-right::before {
+    content: "";
+    position: absolute;
+    width: 240px; height: 240px;
+    right: -120px; top: -90px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(229,165,75,0.18) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .win {
+    width: 218px;
+    height: 360px;
+    background: var(--kairos-bg);
+    border-radius: 9px;
+    box-shadow: var(--shadow-window);
+    overflow: hidden;
+    transform: rotate(-1.5deg);
+    transition: transform .55s cubic-bezier(.2,.7,.2,1);
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #1f1f2a;
+  }
+  .pcard:hover .win {
+    transform: rotate(0deg) translateY(-2px);
+  }
+
+  .win-chrome {
+    height: 22px;
+    background: linear-gradient(180deg, #1a1a22 0%, #14141b 100%);
+    border-bottom: 1px solid #1f1f2a;
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    gap: 5px;
+    flex: 0 0 auto;
+  }
+  .traffic { width: 7px; height: 7px; border-radius: 50%; }
+  .traffic.r { background: #ff5f57; }
+  .traffic.y { background: #ffbd2e; }
+  .traffic.g { background: #28c840; }
+  .url {
+    flex: 1;
+    margin-left: 6px;
+    height: 12px;
+    background: #0d0d12;
+    border: 1px solid #1f1f2a;
+    border-radius: 3px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 7px;
+    color: var(--kairos-text-3);
+    padding: 0 5px;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    line-height: 1;
+  }
+  .url .lock {
+    width: 5px; height: 5px;
+    border: 0.8px solid #555568;
+    border-radius: 1px;
+    border-top: none;
+    position: relative;
+  }
+  .url .lock::before {
+    content: "";
+    position: absolute;
+    top: -3px; left: 0.6px;
+    width: 3px; height: 3px;
+    border: 0.8px solid #555568;
+    border-bottom: none;
+    border-radius: 2px 2px 0 0;
+  }
+
+  .app-head {
+    height: 26px;
+    padding: 0 9px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--kairos-border-subtle);
+    flex: 0 0 auto;
+  }
+  .brand { display: flex; align-items: center; gap: 5px; }
+  .brand-mark {
+    width: 11px; height: 11px;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 35% 35%, var(--kairos-gold) 0%, #b8821f 100%);
+    box-shadow: 0 0 6px rgba(229,165,75,0.45);
+    position: relative;
+  }
+  .brand-mark::after {
+    content: "";
+    position: absolute;
+    inset: 2.5px;
+    border-radius: 50%;
+    background: var(--kairos-bg);
+  }
+  .brand-name {
+    font-family: "Inter", sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--kairos-text);
+  }
+  .nav-dots { display: flex; gap: 4px; }
+  .nav-dot {
+    width: 14px; height: 4px;
+    border-radius: 1px;
+    background: var(--kairos-border-subtle);
+  }
+  .nav-dot.active { background: var(--kairos-indigo); }
+
+  .section-label {
+    padding: 8px 9px 4px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 6.5px;
+    font-weight: 500;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--kairos-text-3);
+    flex: 0 0 auto;
+  }
+
+  .graph {
+    position: relative;
+    margin: 0 9px;
+    height: 142px;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 50%, rgba(99,102,241,0.06) 0%, transparent 70%),
+      var(--kairos-surface);
+    border: 1px solid var(--kairos-border-subtle);
+    border-radius: 5px;
+    overflow: hidden;
+    flex: 0 0 auto;
+  }
+  .graph svg { display: block; width: 100%; height: 100%; }
+
+  .edge {
+    stroke: #2a2a40;
+    stroke-width: 0.7;
+    fill: none;
+    transition: stroke 0.5s ease;
+    stroke-opacity: 0.85;
+  }
+  .pcard:hover .edge { stroke: #3d3d5c; }
+
+  .node { transition: r 0.4s cubic-bezier(.2,.7,.2,1), filter 0.4s ease; }
+  .node.c-indigo { fill: var(--kairos-indigo); }
+  .node.c-emerald { fill: #10B981; }
+  .node.c-purple { fill: #8B5CF6; }
+  .node.c-amber { fill: #F59E0B; }
+
+  .pcard:hover .node.pulse {
+    filter: drop-shadow(0 0 3px var(--kairos-indigo))
+            drop-shadow(0 0 1px var(--kairos-indigo));
+  }
+  .pcard:hover .node.pulse-gold {
+    filter: drop-shadow(0 0 4px var(--kairos-gold))
+            drop-shadow(0 0 1.5px var(--kairos-gold));
+  }
+  .node.grow {
+    transform-origin: center;
+    transform-box: fill-box;
+    transition: r 0.6s cubic-bezier(.2,.7,.2,1) 0.15s,
+                filter 0.4s ease;
+  }
+  .pcard:hover .node.grow { r: 5; }
+
+  .node-label {
+    font-family: "Inter", sans-serif;
+    font-size: 5px;
+    font-weight: 500;
+    fill: var(--kairos-text-2);
+    letter-spacing: 0.02em;
+  }
+  .node-label.primary { fill: var(--kairos-text); font-weight: 600; }
+
+  .stats {
+    margin: 6px 9px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 5px;
+    flex: 0 0 auto;
+  }
+  .stat {
+    background: var(--kairos-surface);
+    border: 1px solid var(--kairos-border-subtle);
+    border-radius: 3px;
+    padding: 4px 5px 5px;
+  }
+  .stat-label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 5.5px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--kairos-text-3);
+    margin-bottom: 1px;
+  }
+  .stat-value {
+    font-family: "Inter", sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--kairos-text);
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+  .stat-value.indigo { color: var(--kairos-indigo-soft); }
+
+  .nudge {
+    position: absolute;
+    left: 9px;
+    right: 9px;
+    bottom: 8px;
+    background: var(--kairos-elevated);
+    border: 1px solid var(--kairos-border);
+    border-left: 2px solid var(--kairos-gold);
+    border-radius: 4px;
+    padding: 7px 8px 8px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+    z-index: 5;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.35s ease 0.1s,
+                transform 0.45s cubic-bezier(.2,.7,.2,1) 0.1s;
+    pointer-events: none;
+  }
+  .pcard:hover .nudge {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .nudge-tag {
+    display: inline-block;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 5.5px;
+    font-weight: 500;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--kairos-gold);
+    margin-bottom: 3px;
+  }
+  .nudge-line {
+    font-family: "Inter", sans-serif;
+    font-size: 7px;
+    line-height: 1.4;
+    color: var(--kairos-text);
+    margin: 0;
+  }
+  .nudge-line + .nudge-line {
+    margin-top: 2px;
+    color: var(--kairos-text-2);
+    font-style: italic;
+    font-size: 6.5px;
+  }
+  .nudge-line.exp {
+    margin-top: 4px;
+    padding-top: 4px;
+    border-top: 1px solid var(--kairos-border-subtle);
+    color: var(--kairos-gold);
+    font-style: normal;
+    font-size: 6.5px;
+    font-weight: 500;
+  }
+</style>
+</head>
+<body>
+
+<a class="pcard" href="https://github.com/kairos-think-ai/kairos" target="_blank" rel="noopener noreferrer" aria-label="Kairos on GitHub">
+
+  <div class="pcard-left">
+    <div class="meta">
+      <span>2026</span>
+      <span class="dot"></span>
+      <span>Research &middot; Cognitive Analytics</span>
+    </div>
+
+    <h2 class="title">The <em>human capability layer</em> for AI conversations.</h2>
+
+    <p class="sub">Every other tool makes the AI better. Kairos measures whether the human is. Behavioral analytics + live coaching across Claude, ChatGPT &amp; Gemini — built on a longitudinal thinking graph with spaced repetition.</p>
+
+    <div class="chips">
+      <span class="tchip">MCP</span>
+      <span class="tchip">Next.js</span>
+      <span class="tchip">TypeScript</span>
+      <span class="tchip">Supabase</span>
+      <span class="tchip">d3-force</span>
+    </div>
+
+    <div class="pcard-foot">
+      <div class="repo">
+        <strong>kairos&#8209;think&#8209;ai</strong> / kairos
+      </div>
+      <span class="arrow" aria-hidden="true">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3 L11 8 L5 13"/></svg>
+      </span>
+    </div>
+  </div>
+
+  <div class="pcard-right" aria-hidden="true">
+    <div class="win">
+
+      <div class="win-chrome">
+        <div class="traffic r"></div>
+        <div class="traffic y"></div>
+        <div class="traffic g"></div>
+        <div class="url"><span class="lock"></span>kairos.app/thinking</div>
+      </div>
+
+      <div class="app-head">
+        <div class="brand">
+          <div class="brand-mark"></div>
+          <div class="brand-name">kairos</div>
+        </div>
+        <div class="nav-dots">
+          <div class="nav-dot active"></div>
+          <div class="nav-dot"></div>
+          <div class="nav-dot"></div>
+        </div>
+      </div>
+
+      <div class="section-label">Thinking Map · 50 concepts</div>
+
+      <div class="graph">
+        <svg viewBox="0 0 200 142" preserveAspectRatio="xMidYMid meet">
+          <g>
+            <path class="edge" d="M 60,52 L 92,40"></path>
+            <path class="edge" d="M 60,52 L 70,82"></path>
+            <path class="edge" d="M 92,40 L 122,52"></path>
+            <path class="edge" d="M 92,40 L 110,72"></path>
+            <path class="edge" d="M 110,72 L 70,82"></path>
+            <path class="edge" d="M 110,72 L 138,86"></path>
+            <path class="edge" d="M 110,72 L 122,52"></path>
+            <path class="edge" d="M 122,52 L 152,40"></path>
+            <path class="edge" d="M 138,86 L 152,108"></path>
+            <path class="edge" d="M 138,86 L 168,72"></path>
+            <path class="edge" d="M 70,82 L 50,108"></path>
+            <path class="edge" d="M 50,108 L 80,116"></path>
+            <path class="edge" d="M 80,116 L 110,108"></path>
+            <path class="edge" d="M 110,108 L 138,86"></path>
+            <path class="edge" d="M 152,40 L 168,72"></path>
+            <path class="edge" d="M 30,72 L 60,52"></path>
+            <path class="edge" d="M 30,72 L 50,108"></path>
+            <path class="edge" d="M 168,72 L 152,108"></path>
+            <path class="edge" d="M 110,108 L 152,108"></path>
+          </g>
+
+          <circle class="node c-indigo grow" cx="92" cy="40" r="3.6"></circle>
+          <circle class="node c-indigo" cx="60" cy="52" r="2.4"></circle>
+          <circle class="node c-indigo pulse" cx="122" cy="52" r="3.0"></circle>
+          <circle class="node c-indigo" cx="152" cy="40" r="2.0"></circle>
+          <circle class="node c-indigo" cx="30" cy="72" r="1.8"></circle>
+
+          <circle class="node c-purple" cx="110" cy="72" r="3.2"></circle>
+          <circle class="node c-purple" cx="70" cy="82" r="2.2"></circle>
+          <circle class="node c-purple" cx="138" cy="86" r="2.6"></circle>
+
+          <circle class="node c-emerald" cx="50" cy="108" r="2.0"></circle>
+          <circle class="node c-emerald" cx="80" cy="116" r="2.4"></circle>
+
+          <circle class="node c-amber pulse-gold" cx="168" cy="72" r="2.8"></circle>
+          <circle class="node c-amber" cx="152" cy="108" r="2.0"></circle>
+          <circle class="node c-amber" cx="110" cy="108" r="1.8"></circle>
+
+          <circle class="node c-indigo" cx="180" cy="118" r="1.2" opacity="0.55"></circle>
+          <circle class="node c-purple" cx="22" cy="48" r="1.2" opacity="0.55"></circle>
+          <circle class="node c-emerald" cx="20" cy="124" r="1.0" opacity="0.5"></circle>
+
+          <text class="node-label primary" x="92" y="32" text-anchor="middle">capability</text>
+          <text class="node-label" x="60" y="46" text-anchor="middle">drift</text>
+          <text class="node-label" x="122" y="46" text-anchor="middle">coaching</text>
+          <text class="node-label" x="168" y="65" text-anchor="middle">YC&nbsp;S26</text>
+          <text class="node-label" x="138" y="100" text-anchor="middle">resurface</text>
+        </svg>
+
+        <div class="nudge">
+          <div class="nudge-tag">Coach &middot; Pattern</div>
+          <p class="nudge-line">Verification rate this session: 0.12</p>
+          <p class="nudge-line">Your baseline across 51 conversations: 0.34.</p>
+          <p class="nudge-line exp">Last 5 turns accepted without pushback.</p>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-label">Verify</div>
+          <div class="stat-value indigo">0.34</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Drift</div>
+          <div class="stat-value">0.59</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Ideas</div>
+          <div class="stat-value">511</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</a>
+
+</body>
+</html>

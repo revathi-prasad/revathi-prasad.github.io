@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sentamizh Corpus — portfolio card</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Noto+Serif+Tamil:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Sentamizh visual DNA, lifted from annotator/index.html */
+    --ink: #1f1611;
+    --paper: #faf6ec;          /* portfolio cream */
+    --paper-deep: #f4ecdc;     /* card surface within paper */
+    --accent: #7c2d12;         /* deep burnt sienna */
+    --accent-soft: #fff7ed;
+    --accent-dim: #a3431f;
+    --muted: #78716c;
+    --border: #e7dfd0;
+    --border-strong: #d6cab2;
+    --green: #15803d;
+    --shadow-card: 0 1px 2px rgba(60,30,10,0.05), 0 8px 24px rgba(60,30,10,0.08);
+    --shadow-card-hover: 0 2px 4px rgba(60,30,10,0.06), 0 18px 40px rgba(60,30,10,0.14);
+    --shadow-phone: 0 1px 2px rgba(0,0,0,0.04), 0 12px 28px rgba(60,30,10,0.18);
+  }
+
+  /* Demo page chrome — strip these wrappers when embedding into the
+     portfolio. The card itself is .pcard. */
+  html, body {
+    margin: 0;
+    background: #ffffff;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    font-family: "Inter", -apple-system, system-ui, sans-serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── The card ─────────────────────────────────────────────────────── */
+  .pcard {
+    --w: 560px;
+    --h: 440px;
+    width: var(--w);
+    height: var(--h);
+    display: grid;
+    grid-template-columns: 1fr 240px;
+    gap: 0;
+    background: var(--paper);
+    border: 1px solid var(--border-strong);
+    border-radius: 14px;
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    isolation: isolate;
+    transition: transform .35s cubic-bezier(.2,.7,.2,1),
+                box-shadow .35s cubic-bezier(.2,.7,.2,1),
+                border-color .35s ease;
+  }
+  .pcard:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--accent);
+  }
+
+  /* Subtle paper grain — radial dots, very low contrast. */
+  .pcard::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(124,45,18,0.045) 1px, transparent 0);
+    background-size: 18px 18px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ─── Left column ──────────────────────────────────────────────────── */
+  .pcard-left {
+    position: relative;
+    z-index: 1;
+    padding: 28px 26px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 14px;
+    min-width: 0;
+  }
+
+  .meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: "Inter", sans-serif;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  .meta .dot {
+    width: 4px; height: 4px; border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.5;
+  }
+
+  .title {
+    font-family: "EB Garamond", "Iowan Old Style", Georgia, serif;
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 1.18;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin: 0;
+    text-wrap: pretty;
+  }
+  .title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .sub {
+    font-family: "Inter", sans-serif;
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: #4a3f33;
+    margin: 0;
+    text-wrap: pretty;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 4px;
+  }
+  .tchip {
+    font-family: "Inter", sans-serif;
+    font-size: 10.5px;
+    font-weight: 500;
+    color: var(--accent);
+    background: #fff7ed;
+    border: 1px solid #f0d8b8;
+    padding: 4px 9px;
+    border-radius: 999px;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  .pcard-foot {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 14px;
+  }
+  .repo {
+    font-family: "Inter", sans-serif;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+  .repo strong { color: var(--ink); font-weight: 600; }
+  .arrow {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 1px solid var(--border-strong);
+    display: grid; place-items: center;
+    color: var(--accent);
+    transition: transform .35s cubic-bezier(.2,.7,.2,1),
+                background .35s ease, color .35s ease;
+  }
+  .pcard:hover .arrow {
+    background: var(--accent);
+    color: #fff;
+    transform: translateX(2px);
+  }
+  .arrow svg { width: 12px; height: 12px; }
+
+  /* ─── Right column: phone mockup ───────────────────────────────────── */
+  .pcard-right {
+    position: relative;
+    z-index: 1;
+    background:
+      linear-gradient(160deg, #f4ebd6 0%, #ecdfc1 100%);
+    border-left: 1px solid var(--border);
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    padding: 0;
+  }
+
+  /* Decorative kolam-ish corner stamp */
+  .pcard-right::before {
+    content: "";
+    position: absolute;
+    width: 220px; height: 220px;
+    right: -110px; top: -110px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124,45,18,0.1) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .pcard-right::after {
+    content: "செ";
+    position: absolute;
+    bottom: -34px; right: -16px;
+    font-family: "Noto Serif Tamil", serif;
+    font-size: 110px;
+    font-weight: 500;
+    color: rgba(124,45,18,0.04);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* The phone is a fixed-size mock; we scale into available space below. */
+  .phone {
+    width: 200px;
+    height: 380px;
+    background: #1f1611;
+    border-radius: 26px;
+    padding: 8px;
+    box-shadow: var(--shadow-phone);
+    position: relative;
+    transform: rotate(2deg);
+    transition: transform .5s cubic-bezier(.2,.7,.2,1);
+  }
+  .pcard:hover .phone { transform: rotate(0deg) translateY(-2px); }
+
+  .screen {
+    width: 100%;
+    height: 100%;
+    background: #fdfaf6;
+    border-radius: 19px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    font-family: "Inter", sans-serif;
+    color: var(--ink);
+  }
+
+  /* Topbar — same maroon as annotator */
+  .stb {
+    background: var(--accent);
+    color: #fff;
+    padding: 7px 9px 8px;
+    flex: 0 0 auto;
+  }
+  .stb-row {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 6px;
+  }
+  .stb-title {
+    font-family: "Noto Serif Tamil", serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+  .stb-prog {
+    font-size: 7px;
+    opacity: 0.95;
+    font-variant-numeric: tabular-nums;
+  }
+  .stb-bar {
+    height: 2px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 1px;
+    margin-top: 4px;
+    overflow: hidden;
+  }
+  .stb-fill {
+    height: 100%;
+    background: #fff;
+    width: 34%;
+    transition: width 1.2s ease;
+  }
+
+  .scroll {
+    flex: 1;
+    padding: 8px 9px 9px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    overflow: hidden;
+  }
+
+  .vid {
+    font-size: 6.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* Verse card */
+  .verse {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 8px 9px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  .verse-ta {
+    font-family: "Noto Serif Tamil", serif;
+    font-size: 8.5px;
+    line-height: 1.55;
+    color: #2a1f15;
+    white-space: pre-line;
+  }
+  .verse-en {
+    margin-top: 5px;
+    padding-top: 5px;
+    border-top: 1px dashed #e7e2dd;
+    font-family: "EB Garamond", Georgia, serif;
+    font-style: italic;
+    font-size: 7.5px;
+    line-height: 1.5;
+    color: #5a4a3a;
+  }
+
+  /* Section header */
+  .sect {
+    font-size: 6.5px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border-bottom: 1.5px solid #fff1e1;
+    padding-bottom: 2px;
+    margin-top: 1px;
+  }
+
+  /* Field card */
+  .field {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 7px 7px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  }
+  .field-label {
+    font-size: 7px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 4px;
+    display: flex; justify-content: space-between; align-items: baseline;
+  }
+  .field-label .en {
+    font-weight: 400; font-size: 6px; color: var(--muted);
+  }
+
+  .mchips {
+    display: flex; flex-wrap: wrap; gap: 3px;
+  }
+  .mchip {
+    font-size: 6.5px;
+    padding: 3px 4px;
+    border: 1px solid var(--border);
+    background: #fff;
+    border-radius: 3px;
+    color: var(--ink);
+    line-height: 1.1;
+    transition: background .35s ease, color .35s ease, border-color .35s ease;
+    white-space: nowrap;
+  }
+  .mchip.tam {
+    font-family: "Noto Serif Tamil", serif;
+    font-size: 7px;
+    padding: 3px 5px;
+  }
+  .mchip.on {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    font-weight: 500;
+  }
+
+  /* Mic / transcribe row */
+  .mic-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .ta-stub {
+    flex: 1;
+    height: 22px;
+    border: 1px solid var(--border);
+    background: #fcfaf7;
+    border-radius: 4px;
+    padding: 4px 6px;
+    font-family: "Noto Serif Tamil", serif;
+    font-size: 7px;
+    color: var(--muted);
+    overflow: hidden;
+    position: relative;
+  }
+  .ta-stub .caret {
+    display: inline-block;
+    width: 1px; height: 8px;
+    background: var(--accent);
+    vertical-align: middle;
+    margin-left: 1px;
+    animation: caret 1s steps(2) infinite;
+  }
+  @keyframes caret { 50% { opacity: 0; } }
+
+  .mic {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    display: grid; place-items: center;
+    flex-shrink: 0;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    position: relative;
+  }
+  .mic svg { width: 11px; height: 11px; }
+  .mic::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+    border: 1.5px solid var(--accent);
+    opacity: 0;
+    animation: micpulse 2.4s cubic-bezier(.4,0,.6,1) infinite;
+  }
+  @keyframes micpulse {
+    0%   { transform: scale(0.85); opacity: 0; }
+    20%  { opacity: 0.5; }
+    100% { transform: scale(1.85); opacity: 0; }
+  }
+
+  /* Slow chip cycler — only the .selected chip moves through the row */
+  .mchips.cycle .mchip { animation: chip-cycle 8s steps(1) infinite; }
+  .mchips.cycle .mchip:nth-child(1) { animation-delay: 0s; }
+  .mchips.cycle .mchip:nth-child(2) { animation-delay: -2s; }
+  .mchips.cycle .mchip:nth-child(3) { animation-delay: -4s; }
+  .mchips.cycle .mchip:nth-child(4) { animation-delay: -6s; }
+  @keyframes chip-cycle {
+    0%, 24% { background: var(--accent); border-color: var(--accent); color: #fff; }
+    25%, 100% { background: #fff; border-color: var(--border); color: var(--ink); }
+  }
+
+  /* Bottom nav strip */
+  .bnav {
+    margin-top: auto;
+    display: flex;
+    gap: 4px;
+    padding-top: 4px;
+  }
+  .bbtn {
+    flex: 1;
+    background: #fff;
+    border: 1px solid var(--border);
+    color: var(--ink);
+    border-radius: 5px;
+    height: 18px;
+    font-size: 7px;
+    display: grid; place-items: center;
+  }
+  .bbtn.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    font-weight: 600;
+    flex: 1.6;
+  }
+</style>
+</head>
+<body>
+
+<a class="pcard" href="https://github.com/indic-corpora/sentamizh-corpus" target="_blank" rel="noopener noreferrer" aria-label="Sentamizh Corpus on GitHub">
+
+  <!-- LEFT — text block -->
+  <div class="pcard-left">
+    <div class="meta">
+      <span>2025</span>
+      <span class="dot"></span>
+      <span>Research &middot; Dataset</span>
+    </div>
+
+    <h2 class="title">Unifying Classical Tamil under one <em>queryable, multi&#8209;framework schema.</em></h2>
+
+    <p class="sub">10,393 verses across Sangam, Bhakti, Epic &amp; Spiritual texts &mdash; annotated through Tolkappiyam poetics, rasa, dhvani, and a cross&#8209;cultural bridge layer. Built on decades of upstream digitization work.</p>
+
+    <div class="chips">
+      <span class="tchip">JSON Schema</span>
+      <span class="tchip">Soniox STT</span>
+      <span class="tchip">NVIDIA NIM</span>
+      <span class="tchip">Wiktionary</span>
+      <span class="tchip">🤗 HF</span>
+    </div>
+
+    <div class="pcard-foot">
+      <div class="repo">
+        <strong>indic&#8209;corpora</strong> / sentamizh&#8209;corpus
+      </div>
+      <span class="arrow" aria-hidden="true">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3 L11 8 L5 13"/></svg>
+      </span>
+    </div>
+  </div>
+
+  <!-- RIGHT — annotator mock -->
+  <div class="pcard-right" aria-hidden="true">
+    <div class="phone">
+      <div class="screen">
+
+        <!-- Topbar -->
+        <div class="stb">
+          <div class="stb-row">
+            <div class="stb-title">செந்தமிழ் — Kuruntokai</div>
+            <div class="stb-prog">3 / 400</div>
+          </div>
+          <div class="stb-bar"><div class="stb-fill"></div></div>
+        </div>
+
+        <!-- Body -->
+        <div class="scroll">
+
+          <div class="vid">KURU&middot;003</div>
+
+          <div class="verse">
+            <div class="verse-ta">நிலத்தினும் பெரிதே, வானினும் உயர்ந்தன்று,
+நீரினும் ஆரளவின்றே…</div>
+            <div class="verse-en">Larger than the earth, higher than the sky, and harder to fathom than the ocean, is my love…</div>
+          </div>
+
+          <div class="sect">திணை · Thinai</div>
+          <div class="field">
+            <div class="mchips cycle">
+              <span class="mchip tam">குறிஞ்சி</span>
+              <span class="mchip tam">முல்லை</span>
+              <span class="mchip tam">மருதம்</span>
+              <span class="mchip tam">நெய்தல்</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="field-label">
+              <span>நவீன தமிழ்</span><span class="en">modern paraphrase</span>
+            </div>
+            <div class="mic-row">
+              <div class="ta-stub">கேட்கிறேன்<span class="caret"></span></div>
+              <div class="mic">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="bnav">
+            <div class="bbtn">‹</div>
+            <div class="bbtn primary">Save</div>
+            <div class="bbtn">›</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</a>
+
+</body>
+</html>
